@@ -8,13 +8,12 @@
 
 ## 2. 色彩系統
 
-- **畫布白**（`bg-zinc-50` / #F9FAFB）— 主要背景底色
-- **純白面**（`bg-white` / #FFFFFF）— 卡片與容器填色
-- **炭墨黑**（`text-zinc-950` / #18181B）— 主要文字
-- **霧鋼灰**（`text-zinc-500` / #71717A）— 次要文字、說明、metadata
-- **細線邊框**（`border-zinc-200/50`）— 卡片邊框、1px 結構線
-- **[強調色名稱]**（`bg-[#XXXXXX]` / #XXXXXX）— 唯一強調色，用於 CTA、active 狀態、focus ring
-  （最多 1 個強調色。飽和度 < 80%。禁用紫色／霓虹色。）
+- primary（#XXXXXX）— [描述性色彩名稱]：唯一強調色，用於 CTA、active 狀態、focus ring（飽和度 < 80%。禁用紫色／霓虹色。）
+- background（#F9FAFB）— 畫布白：主要背景底色
+- surface（#FFFFFF）— 純白面：卡片與容器填色
+- foreground（#18181B）— 炭墨黑：主要文字
+- muted（#71717A）— 霧鋼灰：次要文字、說明、metadata
+- border（rgba / #XXXXXX）— 細線：卡片邊框、1px 結構線
 
 ## 3. 字型規則
 

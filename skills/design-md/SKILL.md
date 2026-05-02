@@ -37,19 +37,19 @@ Generate a `DESIGN.md` file that encodes:
 
 ## Language Rules
 
-所有輸出內容必須使用**繁體中文**，包含：
+All output content must be written in **Traditional Chinese**, including:
 
-- 所有描述性文字（atmosphere、功能說明、anti-patterns 說明）
-- DESIGN.md 的 section 標題與說明段落
-- 與使用者的所有溝通
+- All descriptive text (atmosphere, functional descriptions, anti-pattern explanations)
+- Section titles and body paragraphs in DESIGN.md
+- All communication with the user
 
-以下內容保持英文原文，不翻譯：
+The following must remain in English as-is:
 
-- Tailwind class 名稱（`bg-zinc-950`、`text-5xl` 等）
-- Hex 色碼（`#18181B`）
-- 字體名稱（`Geist`、`Satoshi` 等）
-- CSS 屬性與數值
-- Motion 參數
+- Tailwind class names (`bg-zinc-950`, `text-5xl`, etc.)
+- Hex color codes (`#18181B`)
+- Font names (`Geist`, `Satoshi`, etc.)
+- CSS properties and values
+- Motion parameters
 
 ## Analysis & Synthesis Instructions
 
@@ -63,15 +63,31 @@ Evaluate the target project's intent. Use evocative adjectives to describe the m
 
 ### 2. Map the Color Palette
 
-For each color provide: **Descriptive Name** + **Tailwind Token** + **Hex Code** + **Functional Role**.
+For each color provide: **Semantic Name** + **Tailwind Token** + **Hex Code** + **Functional Role**.
 
-**Color direction workflow（依序執行）：**
+**Color naming convention — output format for each color:**
 
-1. 讀取 `BRAND.md`，掌握品牌調性與情境
-2. 確認使用者是否已有明確色彩偏好（偏好色、禁用色、既有品牌主色）
-3. 若使用者有明確偏好，優先以該偏好為準
-4. 若使用者沒有偏好，從 `BRAND.md` 與專案 context 推導品牌色方向
-5. 若專案已有 token schema（如 shadcn/ui CSS variables），沿用 token 結構與命名，但依品牌方向重新校準 token values — 不因 token 已存在就沿用預設配色
+```
+- [semantic name]（#HEX）— [descriptive color name]：[functional role]
+```
+
+Example:
+
+```
+- primary（#31594A）— 森林綠：唯一強調色，用於 CTA、active 狀態、focus ring
+- background（#F9FAFB）— 畫布白：主要背景底色
+- foreground（#18181B）— 炭墨黑：主要文字
+```
+
+Fixed semantic name roles: `primary`, `background`, `surface`, `foreground`, `muted`, `border`. Add `secondary` and `tertiary` only when multiple accent levels are needed — maximum 3 total, each with saturation below 80%. Do not use Tailwind token names — hex codes only.
+
+**Color direction workflow (execute in order):**
+
+1. Read `BRAND.md` to understand brand tone and context
+2. Check whether the user has explicit color preferences (preferred colors, banned colors, existing brand colors)
+3. If the user has explicit preferences, prioritize them
+4. If no preferences, derive the brand color direction from `BRAND.md` and project context
+5. If the project already has a token schema (e.g. shadcn/ui CSS variables), keep the token structure and naming, but recalibrate token values to match the brand direction — do not carry over default color values just because tokens exist
 
 **Mandatory constraints:**
 
