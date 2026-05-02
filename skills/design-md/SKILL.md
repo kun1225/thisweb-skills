@@ -1,5 +1,5 @@
 ---
-name: taste-design
+name: design-md
 description: Semantic Design System Skill. Generates AI Agent-friendly DESIGN.md files for Tailwind projects that enforce premium, anti-generic UI standards — strict typography, calibrated color, asymmetric layouts, perpetual micro-motion, and hardware-accelerated performance.
 allowed-tools:
   - "Read"
