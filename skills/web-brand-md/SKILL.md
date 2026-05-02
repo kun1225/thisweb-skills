@@ -1,6 +1,10 @@
 ---
 name: web-brand-md
 description: Clarify a user's brand direction before website structure, copywriting, or visual design begins, then produce a concise `BRAND.md` that downstream AI can use for homepage decisions. Use this skill when the user is still unclear about their brand direction, audience, value proposition, differentiation, core message, or tone for a personal brand site, landing page, portfolio, product page, course page, event page, or small SaaS homepage. Also use it when the user says they do not know how to describe their brand, offer, target audience, or core message yet, even if they do not explicitly ask for a "brand guideline." Do not use this skill when the brand foundations are already clear and the user is explicitly asking you to write final copy, build page sections, design the interface, or implement the website.
+allowed-tools:
+  - "Read"
+  - "Write"
+  - "web_fetch"
 ---
 
 # Website brand guideline
@@ -33,7 +37,7 @@ Help the user answer four questions well enough for website work to move forward
 3. What is the clearest core message?
 4. How should the website sound?
 
-Then convert the answers into a `BRAND.md` file using the template in `references/brand-template.md.md`.
+Then convert the answers into a `BRAND.md` file using the template in `references/BRAND.md`.
 
 ## Interaction style
 
@@ -163,7 +167,7 @@ When writing the final file:
 
 ## Output template
 
-Read `references/brand-template.md.md` and fill in each field. Do not add, remove, or reorder any sections.
+Read `references/BRAND.md` and fill in each field. Do not add, remove, or reorder any sections.
 
 ## Final delivery
 
