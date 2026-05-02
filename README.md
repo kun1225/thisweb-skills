@@ -11,13 +11,13 @@ This repository currently contains one installable skill:
 Install the whole repository:
 
 ```bash
-npx skills add https://github.com/thisweb/thisweb-skills
+npx skills add https://github.com/kun1225/thisweb-skills
 ```
 
 Install only this skill:
 
 ```bash
-npx skills add https://github.com/thisweb/thisweb-skills --skill website-brand-guideline
+npx skills add https://github.com/kun1225/thisweb-skills --skill website-brand-guideline
 ```
 
 ## License
