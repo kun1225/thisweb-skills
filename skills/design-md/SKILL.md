@@ -139,13 +139,57 @@ For each component type, describe shape, color, shadow depth, and interaction be
 
 ### 6. Encode Motion Philosophy
 
-Prefer CSS transitions for all interactive elements. Only use the Motion library when CSS cannot achieve the required effect (e.g. spring physics, staggered orchestration, perpetual loops).
+Prefer CSS transitions for all interactive elements. Only use the Motion library when CSS cannot achieve the required effect (e.g. spring physics, staggered orchestration, perpetual loops, scroll storytelling).
 
-**CSS-first easing patterns:**
+**Step 1 — Select easing family based on brand personality:**
 
-- **Hover:** `transition-[property] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]` — snappy, responsive
-- **Enter & Leave:** `ease-out` — elements decelerate into place
-- **Element moving across screen:** `ease-in-out` — smooth acceleration and deceleration
+| Name           | Feel                                                        | Best for                                                                     |
+| -------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **SINE**       | Softest and most natural — smooth at both ends              | Hover, fade, low-distraction transitions, lightweight brands                 |
+| **QUAD**       | Gentle acceleration/deceleration — more dynamic than linear | Everyday UI, buttons, cards, basic interface animations                      |
+| **CUBIC**      | Moderate acceleration — confident and stable                | Standard UI transitions, modals, drawers, panel slide-in/out                 |
+| **QUART**      | Noticeable speed contrast — slow start, fast finish         | Tension-driven brand animations, hero element entrances                      |
+| **QUINT**      | Strong acceleration/deceleration — powerful and rhythmic    | Dramatic transitions, large element movement, rhythm-heavy interactions      |
+| **EXPO**       | Extreme speed contrast — nearly still then sudden burst     | Full-screen switches, hero animations, bold entrances (use sparingly)        |
+| **CIRC**       | Weighted, inertia-like — follows a circular arc             | Tactile pop-ups, large cards and panels, elements that feel physically heavy |
+| **JUMP**       | Discrete steps — close to `steps()`                         | Pixel art, counters, toggle states, mechanical or game UI                    |
+| **BACK**       | Slightly overshoots the target — springy and lively         | Toasts, popovers, card entrances, success states, energetic brand UI         |
+| **ANTICIPATE** | Pulls back before moving forward — wind-up effect           | Character-like animations, drag-release, key element reveals, playful UI     |
+
+**Step 2 — Pick the direction variant:**
+
+- `Out` — elements entering / decelerating into place (most common)
+- `InOut` — elements moving across the screen from A to B
+- `In` — elements exiting (use rarely)
+
+**Step 3 — Apply the cubic-bezier value:**
+
+```
+sineOut:        cubic-bezier(0.61, 1, 0.87, 1)
+sineInOut:      cubic-bezier(0.36, 0, 0.64, 1)
+quadOut:        cubic-bezier(0.5, 1, 0.89, 1)
+quadInOut:      cubic-bezier(0.44, 0, 0.56, 1)
+cubicOut:       cubic-bezier(0.33, 1, 0.68, 1)
+cubicInOut:     cubic-bezier(0.66, 0, 0.34, 1)
+quartOut:       cubic-bezier(0.25, 1, 0.5, 1)
+quartInOut:     cubic-bezier(0.78, 0, 0.22, 1)
+quintOut:       cubic-bezier(0.22, 1, 0.36, 1)
+quintInOut:     cubic-bezier(0.86, 0, 0.14, 1)
+expoOut:        cubic-bezier(0.16, 1, 0.3, 1)
+expoInOut:      cubic-bezier(0.9, 0, 0.1, 1)
+circOut:        cubic-bezier(0, 0.55, 0.45, 1)
+circInOut:      cubic-bezier(0.85, 0.09, 0.15, 0.91)
+jumpInOut:      cubic-bezier(1, 0, 0, 1)
+backOut:        cubic-bezier(0.34, 1.56, 0.64, 1)
+backInOut:      cubic-bezier(0.68, -0.6, 0.32, 1.6)
+anticipateInOut:cubic-bezier(0.8, -0.4, 0.5, 1)
+```
+
+**CSS-first usage patterns:**
+
+- **Hover:** `transition-[property] duration-200 ease-[cubicOut]` — snappy, responsive
+- **Enter & Leave:** `ease-[cubicOut]` or `ease-[quartOut]` — elements decelerate into place
+- **Element moving across screen:** `ease-[cubicInOut]` — smooth acceleration and deceleration
 
 **When Motion is required, provide copy-paste spring parameters:**
 
