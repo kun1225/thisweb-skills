@@ -7,8 +7,6 @@ allowed-tools:
   - "web_fetch"
 ---
 
-# Design Taste — Semantic Design System Skill
-
 ## Overview
 
 This skill generates `DESIGN.md` files optimized for AI Agent consumption in Tailwind-based projects. It translates battle-tested anti-slop frontend engineering directives into a semantic design language — descriptive, natural-language rules paired with precise Tailwind classes and values that AI Agents can interpret to produce premium, non-generic interfaces.
@@ -99,15 +97,28 @@ Fixed semantic name roles: `primary`, `background`, `surface`, `foreground`, `mu
 
 ### 3. Establish Typography Rules
 
-Use Tailwind classes for size, weight, and spacing. Font selection uses font family names mapped to Tailwind's `font-sans`, `font-serif`, and `font-mono` utilities:
+Define a type scale from largest to smallest. Use semantic names — not numbers. Only add `-lg` / `-sm` variants when the same semantic level genuinely needs two distinct sizes with different use cases.
 
-- **Display/Headlines:** `font-sans text-5xl font-semibold tracking-tight` — hierarchy through weight and color, not just massive size
-- **Body:** `font-sans text-base leading-relaxed max-w-[65ch]` — relaxed leading, max 65 characters per line
-- **Mono:** `font-mono` — for code, metadata, timestamps, high-density numbers
-- **Font Selection:** `Inter` is BANNED for premium/creative contexts. Force unique character: `Geist`, `Outfit`, `Cabinet Grotesk`, or `Satoshi` — configured as `font-sans` in Tailwind theme
-- **Serif Ban:** Generic serif fonts (`Times New Roman`, `Georgia`, `Garamond`) are BANNED. If serif is needed for editorial/creative contexts, use only distinctive modern serifs: `Fraunces`, `Editorial New`, or `Instrument Serif` — configured as `font-serif`. Serif is always BANNED in dashboards or software UIs
-- **Dashboard Constraint:** `font-sans` + `font-mono` pairings exclusively (`Geist` + `Geist Mono` or `Satoshi` + `JetBrains Mono`)
-- **High-Density Override:** When density exceeds 7, all numbers must use `font-mono`
+**Type scale (large → small):**
+
+| Level        | Font           | Tailwind Classes                         | Usage                                                |
+| ------------ | -------------- | ---------------------------------------- | ---------------------------------------------------- |
+| **Hero**     | `font-display` | `text-6xl font-bold tracking-tight`      | Page hero statement, banner. Max once per page.      |
+| **Title**    | `font-display` | `text-4xl font-semibold tracking-tight`  | Section headings, H1                                 |
+| **Subtitle** | `font-sans`    | `text-2xl font-medium tracking-tight`    | Card headings, H2/H3, module labels                  |
+| **Body-lg**  | `font-sans`    | `text-lg leading-relaxed max-w-[65ch]`   | Long-form articles, landing page lead paragraphs     |
+| **Body-sm**  | `font-sans`    | `text-base leading-relaxed max-w-[65ch]` | General body, sidebar descriptions, form helper text |
+| **Caption**  | `font-sans`    | `text-sm leading-normal text-muted`      | Image captions, dates, metadata                      |
+| **Label**    | `font-sans`    | `text-sm font-medium tracking-wide`      | Button text, tags, badges, form labels               |
+| **Mono**     | `font-mono`    | `text-sm`                                | Code, SKUs, timestamps, high-density numbers         |
+
+**Rules:**
+
+- Start with these 7 levels. Only add variants (e.g. `Body-lg` / `Body-sm`) when two sizes share the same semantic role but serve clearly different contexts.
+- `Inter` is BANNED for premium/creative contexts. Force unique character: `Geist`, `Outfit`, `Cabinet Grotesk`, or `Satoshi` — configured as `font-sans`
+- Generic serif fonts (`Times New Roman`, `Georgia`, `Garamond`) are BANNED. If serif is needed, use only: `Fraunces`, `Editorial New`, or `Instrument Serif` — configured as `font-display`
+- Dashboard constraint: `font-sans` + `font-mono` only — `font-display` is BANNED in dashboards or software UIs
+- When density exceeds 7, all numbers must use `font-mono`
 
 ### 4. Describe Component Stylings
 

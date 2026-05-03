@@ -17,10 +17,15 @@
 
 ## 3. 字型規則
 
-- **Display：** `font-sans` → [字體名稱] — `text-5xl font-semibold tracking-tight`
-- **Body：** `font-sans` → [字體名稱] — `text-base leading-relaxed max-w-[65ch] text-zinc-500`
-- **Mono：** `font-mono` → [字體名稱] — 用於程式碼、metadata、時間戳記、高密度數字
-- **禁用：** Inter、通用系統字體。Dashboard 禁用 `font-serif`。
+- **Hero：** `font-display` → [字體名稱] — `text-6xl font-bold tracking-tight` — 頁面主標語、Banner 大字，每頁最多出現一次
+- **Title：** `font-display` → [字體名稱] — `text-4xl font-semibold tracking-tight` — Section 標題、頁面 H1
+- **Subtitle：** `font-sans` → [字體名稱] — `text-2xl font-medium tracking-tight` — 卡片標題、H2/H3、模組小標
+- **Body-lg：** `font-sans` → [字體名稱] — `text-lg leading-relaxed max-w-[65ch]` — 文章長文、Landing page 引言段落
+- **Body-sm：** `font-sans` → [字體名稱] — `text-base leading-relaxed max-w-[65ch]` — 一般正文、側欄說明、表單 helper text
+- **Caption：** `font-sans` → [字體名稱] — `text-sm leading-normal text-muted` — 圖片說明、日期、metadata
+- **Label：** `font-sans` → [字體名稱] — `text-sm font-medium tracking-wide` — 按鈕文字、tag、badge、表單 label
+- **Mono：** `font-mono` → [字體名稱] — `text-sm` — 程式碼、SKU、時間戳記、高密度數字
+- **禁用：** Inter、通用系統字體。Dashboard 禁用 `font-display`（serif）。
 
 ## 4. 元件樣式
 
