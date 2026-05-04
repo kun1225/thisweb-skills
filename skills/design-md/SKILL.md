@@ -7,19 +7,7 @@ allowed-tools:
   - "web_fetch"
 ---
 
-## Overview
-
-This skill generates `DESIGN.md` files optimized for AI Agent consumption in Tailwind-based projects. It translates battle-tested anti-slop frontend engineering directives into a semantic design language — descriptive, natural-language rules paired with precise Tailwind classes and values that AI Agents can interpret to produce premium, non-generic interfaces.
-
-The generated `DESIGN.md` serves as the **single source of truth** for prompting AI Agents to generate new screens that align with a curated, high-agency design language.
-
-## Step 0 — Read or Generate BRAND.md
-
-Before generating the design system, establish brand context:
-
-1. **BRAND.md found** — Read it. Use it as the source of truth for color direction, layout personality, and tone.
-2. **BRAND.md not found, but sufficient context exists** — Synthesize a minimal one-shot `BRAND.md` from the available project context (README, existing components, user description). Write it to the project root before continuing.
-3. **BRAND.md not found and context is insufficient** — Fetch `https://raw.githubusercontent.com/kun1225/thisweb-skills/main/skills/web-brand-md/SKILL.md` and follow its interview flow to generate `BRAND.md` first, then continue.
+Generate a `DESIGN.md` for a Tailwind project. The file is consumed by AI Agents to produce new screens — write rules that are precise, scannable, and immediately actionable. Read `references/DESIGN.md` for the output template; fill every section with project-specific values.
 
 ## The Goal
 
@@ -33,43 +21,35 @@ Generate a `DESIGN.md` file that encodes:
 6. **Motion philosophy** — Motion animation specs, spring physics, perpetual micro-interactions
 7. **Anti-patterns** — explicit list of banned AI design clichés
 
+## Step 0 — Establish Brand Context
+
+1. **BRAND.md exists** → Read it. Use as source of truth.
+2. **No BRAND.md, but context exists** → Synthesize a minimal `BRAND.md` from README, components, or user description. Write it to the project root, then continue.
+3. **No BRAND.md, no context** → Fetch `https://raw.githubusercontent.com/kun1225/thisweb-skills/main/skills/web-brand-md/SKILL.md` and run its interview flow to generate `BRAND.md` first.
+
 ## Language Rules
 
-All output content must be written in **Traditional Chinese**, including:
+- **DESIGN.md content**: Traditional Chinese for all descriptive text, section titles, and body copy
+- **Stay English**: Tailwind classes, hex codes, font names, CSS values, Motion parameters
+- **User communication**: Traditional Chinese
 
-- All descriptive text (atmosphere, functional descriptions, anti-pattern explanations)
-- Section titles and body paragraphs in DESIGN.md
-- All communication with the user
+## 1. Atmosphere
 
-The following must remain in English as-is:
+Three short descriptors:
 
-- Tailwind class names (`bg-zinc-950`, `text-5xl`, etc.)
-- Hex color codes (`#18181B`)
-- Font names (`Geist`, `Satoshi`, etc.)
-- CSS properties and values
-- Motion parameters
-
-## Analysis & Synthesis Instructions
-
-### 1. Define the Atmosphere
-
-Evaluate the target project's intent. Use evocative adjectives to describe the mood, density, and motion intensity. Keep it brief and directional — this is for AI Agent consumption, not a design brief narrative.
-
-- **Mood** — the emotional register (e.g. clinical, warm, playful, editorial)
+- **Mood** — emotional register (e.g. clinical, warm, editorial)
 - **Density** — information compactness (e.g. airy / balanced / dense)
-- **Motion intensity** — how much animation is present (e.g. static / fluid / cinematic)
+- **Motion intensity** — animation presence (e.g. static / fluid / cinematic)
 
-### 2. Map the Color Palette
+## 2. Color Palette
 
-For each color provide: **Semantic Name** + **Tailwind Token** + **Hex Code** + **Functional Role**.
-
-**Color naming convention — output format for each color:**
+**Output format per color:**
 
 ```
 - [semantic name]（#HEX）— [descriptive color name]：[functional role]
 ```
 
-Example:
+**Example:**
 
 ```
 - primary（#31594A）— 森林綠：唯一強調色，用於 CTA、active 狀態、focus ring
@@ -77,170 +57,133 @@ Example:
 - foreground（#18181B）— 炭墨黑：主要文字
 ```
 
-Fixed semantic name roles: `primary`, `background`, `surface`, `foreground`, `muted`, `border`. Add `secondary` and `tertiary` only when multiple accent levels are needed — maximum 3 total, each with saturation below 80%. Do not use Tailwind token names — hex codes only.
+**Required tokens:** `primary`, `background`, `surface`, `foreground`, `muted`, `border`. Add `secondary` / `tertiary` only when multiple accent levels are genuinely needed — max 3 total.
 
-**Color direction workflow (execute in order):**
+**Decision workflow:**
 
-1. Read `BRAND.md` to understand brand tone and context
-2. Check whether the user has explicit color preferences (preferred colors, banned colors, existing brand colors)
-3. If the user has explicit preferences, prioritize them
-4. If no preferences, derive the brand color direction from `BRAND.md` and project context
-5. If the project already has a token schema (e.g. shadcn/ui CSS variables), keep the token structure and naming, but recalibrate token values to match the brand direction — do not carry over default color values just because tokens exist
+1. Read `BRAND.md` for tone and color direction
+2. Honor explicit user preferences (preferred colors, banned colors, existing brand)
+3. If no preferences, derive from brand context
+4. If an existing token schema exists (e.g. shadcn/ui CSS variables), keep the structure but recalibrate values — never carry over defaults just because tokens exist
 
-**Mandatory constraints:**
+**Constraints:**
 
-- Maximum 1 accent color. Saturation below 80%
-- The "AI Purple/Blue Neon" aesthetic is strictly BANNED — no purple button glows, no neon gradients
-- Use absolute neutral bases (Zinc/Slate) with high-contrast singular accents
-- Stick to one palette for the entire output — no warm/cool gray fluctuation
-- Never use pure black (`#000000`) — use Off-Black, `zinc-950`, or Charcoal
+- Max 1 accent. Saturation below 80%
+- No "AI Purple/Blue Neon" — no purple glows, no neon gradients
+- Neutral base: Zinc or Slate only — no warm/cool gray mixing
+- No pure black (`#000000`) — use Off-Black or `zinc-950`
 
-### 3. Establish Typography Rules
+## 3. Typography
 
-Define a type scale from largest to smallest. Use semantic names — not numbers. Only add `-lg` / `-sm` variants when the same semantic level genuinely needs two distinct sizes with different use cases.
+**Step 0 — Confirm project language:**
 
-**Type scale (large → small):**
+Check the project's primary content language before selecting fonts. The font stack differs significantly between Latin and CJK contexts.
 
-| Level        | Font           | Tailwind Classes                         | Usage                                                |
-| ------------ | -------------- | ---------------------------------------- | ---------------------------------------------------- |
-| **Hero**     | `font-display` | `text-6xl font-bold tracking-tight`      | Page hero statement, banner. Max once per page.      |
-| **Title**    | `font-display` | `text-4xl font-semibold tracking-tight`  | Section headings, H1                                 |
-| **Subtitle** | `font-sans`    | `text-2xl font-medium tracking-tight`    | Card headings, H2/H3, module labels                  |
-| **Body-lg**  | `font-sans`    | `text-lg leading-relaxed max-w-[65ch]`   | Long-form articles, landing page lead paragraphs     |
-| **Body-sm**  | `font-sans`    | `text-base leading-relaxed max-w-[65ch]` | General body, sidebar descriptions, form helper text |
-| **Caption**  | `font-sans`    | `text-sm leading-normal text-muted`      | Image captions, dates, metadata                      |
-| **Label**    | `font-sans`    | `text-sm font-medium tracking-wide`      | Button text, tags, badges, form labels               |
-| **Mono**     | `font-mono`    | `text-sm`                                | Code, SKUs, timestamps, high-density numbers         |
+- **Latin only** (English, European languages) → use Latin typefaces from the Policy list below
+- **CJK primary** (Traditional Chinese, Simplified Chinese, Japanese, Korean) → pair a Latin display font with a CJK system stack: `"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif`; avoid decorative Latin fonts for body text — they render poorly with CJK glyphs
+- **Mixed** (Latin UI + CJK content) → assign Latin fonts to display/heading tokens (`font-hero`, `font-title`), CJK stack to body tokens (`font-body-lg`, `font-body-sm`)
 
-**Rules:**
+If the project language is ambiguous, ask before assigning fonts.
 
-- Start with these 7 levels. Only add variants (e.g. `Body-lg` / `Body-sm`) when two sizes share the same semantic role but serve clearly different contexts.
-- `Inter` is BANNED for premium/creative contexts. Force unique character: `Geist`, `Outfit`, `Cabinet Grotesk`, or `Satoshi` — configured as `font-sans`
-- Generic serif fonts (`Times New Roman`, `Georgia`, `Garamond`) are BANNED. If serif is needed, use only: `Fraunces`, `Editorial New`, or `Instrument Serif` — configured as `font-display`
-- Dashboard constraint: `font-sans` + `font-mono` only — `font-display` is BANNED in dashboards or software UIs
-- When density exceeds 7, all numbers must use `font-mono`
+**Type scale:**
 
-### 4. Describe Component Stylings
+| Level        | Font Token      | Tailwind Classes                         | Usage                                                |
+| ------------ | --------------- | ---------------------------------------- | ---------------------------------------------------- |
+| **Hero**     | `font-hero`     | `text-6xl font-bold tracking-tight`      | Page hero statement, banner. Max once per page.      |
+| **Title**    | `font-title`    | `text-4xl font-semibold tracking-tight`  | Section headings, H1                                 |
+| **Subtitle** | `font-subtitle` | `text-2xl font-medium tracking-tight`    | Card headings, H2/H3, module labels                  |
+| **Body-lg**  | `font-body-lg`  | `text-lg leading-relaxed max-w-[65ch]`   | Long-form articles, landing page lead paragraphs     |
+| **Body-sm**  | `font-body-sm`  | `text-base leading-relaxed max-w-[65ch]` | General body, sidebar descriptions, form helper text |
+| **Caption**  | `font-caption`  | `text-sm leading-normal text-muted`      | Image captions, dates, metadata                      |
+| **Label**    | `font-label`    | `text-sm font-medium tracking-wide`      | Button text, tags, badges, form labels               |
+| **Mono**     | `font-mono`     | `text-sm`                                | Code, SKUs, timestamps, high-density numbers         |
 
-For each component type, describe shape, color, shadow depth, and interaction behavior using Tailwind classes:
+**Policy:**
 
-- **Buttons:** Tactile push feedback on active state (`active:-translate-y-px`). No neon outer glows. No custom mouse cursors. Example: `bg-zinc-900 text-white px-6 py-2.5 rounded-xl font-medium transition-transform active:-translate-y-px`
-- **Cards:** Use ONLY when elevation communicates hierarchy. Tint shadows to background hue (`shadow-zinc-200/50`). For high-density layouts, replace cards with `border-t` dividers or negative space. Example: `rounded-2xl border border-zinc-100 bg-white p-6 shadow-sm shadow-zinc-200/50`
+- Token names must map 1:1 to semantic levels — no shared family tokens like `font-sans` or `font-display`
+- Only add `-lg` / `-sm` variants when the same level serves two clearly distinct contexts
+- `Inter` is BANNED — use `Geist`, `Outfit`, `Cabinet Grotesk`, or `Satoshi`
+- Generic serifs (`Times New Roman`, `Georgia`, `Garamond`) are BANNED — if serif is needed, use `Fraunces`, `Editorial New`, or `Instrument Serif`
+- Dashboard / software UI: serif-backed title tokens are BANNED
+- When density > 7, all numbers use `font-mono`
 
-### 5. Define Layout Principles
+## 4. Component Stylings
 
-- No overlapping elements — every element occupies its own clear spatial zone
-- Centered layouts BANNED for asymmetric or creative projects — force Split Screen, Left-Aligned, or Asymmetric Whitespace
-- The generic "3 equal cards horizontally" feature row is BANNED — use 2-column Zig-Zag, asymmetric grid, or horizontal scroll
-- Contain layouts using max-width constraints (`max-w-7xl mx-auto`)
-- **Baseline responsive constraints (non-negotiable):**
-  - All multi-column layouts collapse to single column below `md:` breakpoint
-  - All interactive elements minimum `44px` tap target (`min-h-[44px]`)
+**Rule:** Every color-bearing Tailwind class (`text-*`, `bg-*`, `border-*`, `ring-*`, `shadow-*`, `hover:*`, `from-*`/`to-*`, etc.) must use only the semantic tokens defined in Section 2.
 
-### 6. Encode Motion Philosophy
+**Token → class reference:**
 
-Prefer CSS transitions for all interactive elements. Only use the Motion library when CSS cannot achieve the required effect (e.g. spring physics, staggered orchestration, perpetual loops, scroll storytelling).
+| Intent                  | Correct class         | Banned examples                          |
+| ----------------------- | --------------------- | ---------------------------------------- |
+| Primary text            | `text-foreground`     | `text-zinc-900`, `text-[#1a1a1a]`        |
+| Secondary / meta text   | `text-muted`          | `text-zinc-500`, `text-[#888]`           |
+| Accent / CTA text       | `text-primary`        | `text-green-600`, `text-[#31594A]`       |
+| Page background         | `bg-background`       | `bg-zinc-50`, `bg-[#f9fafb]`             |
+| Card / surface fill     | `bg-surface`          | `bg-white`, `bg-zinc-100`                |
+| Accent fill             | `bg-primary`          | `bg-emerald-600`, `bg-[#31594A]`         |
+| Reversed text on accent | `text-background`     | `text-white`, `text-[#fff]`              |
+| Dividers / borders      | `border-border`       | `border-zinc-200`, `border-[#ddd]`       |
+| Hover state fill        | `hover:bg-primary/10` | `hover:bg-zinc-100`, `hover:bg-[#eee]`   |
+| Focus ring              | `ring-primary`        | `ring-zinc-400`, `ring-[#999]`           |
+| Shadow tint             | `shadow-border/50`    | `shadow-zinc-200/50`, `shadow-[#ccc]/30` |
 
-**Step 1 — Select easing family based on brand personality:**
+**Components:**
 
-| Name           | Feel                                                        | Best for                                                                     |
-| -------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| **SINE**       | Softest and most natural — smooth at both ends              | Hover, fade, low-distraction transitions, lightweight brands                 |
-| **QUAD**       | Gentle acceleration/deceleration — more dynamic than linear | Everyday UI, buttons, cards, basic interface animations                      |
-| **CUBIC**      | Moderate acceleration — confident and stable                | Standard UI transitions, modals, drawers, panel slide-in/out                 |
-| **QUART**      | Noticeable speed contrast — slow start, fast finish         | Tension-driven brand animations, hero element entrances                      |
-| **QUINT**      | Strong acceleration/deceleration — powerful and rhythmic    | Dramatic transitions, large element movement, rhythm-heavy interactions      |
-| **EXPO**       | Extreme speed contrast — nearly still then sudden burst     | Full-screen switches, hero animations, bold entrances (use sparingly)        |
-| **CIRC**       | Weighted, inertia-like — follows a circular arc             | Tactile pop-ups, large cards and panels, elements that feel physically heavy |
-| **JUMP**       | Discrete steps — close to `steps()`                         | Pixel art, counters, toggle states, mechanical or game UI                    |
-| **BACK**       | Slightly overshoots the target — springy and lively         | Toasts, popovers, card entrances, success states, energetic brand UI         |
-| **ANTICIPATE** | Pulls back before moving forward — wind-up effect           | Character-like animations, drag-release, key element reveals, playful UI     |
+- **button:** `bg-foreground text-background px-6 py-2.5 rounded-xl font-medium transition-all duration-200 hover:bg-foreground/90 active:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` — no outer glows, tactile push on active
+- **Card:** `rounded-2xl border border-border bg-surface p-6 shadow-sm shadow-border/50 hover:shadow-md hover:shadow-border/30 transition-shadow duration-200` — use shadows only when elevation communicates hierarchy; high-density layouts use `border-t border-border` dividers instead
 
-**Step 2 — Pick the direction variant:**
+## 5. Layout Principles
 
-- `Out` — elements entering / decelerating into place (most common)
-- `InOut` — elements moving across the screen from A to B
-- `In` — elements exiting (use rarely)
+- Grid-first responsive architecture. Contain with `max-w-8xl mx-auto`
+- Asymmetric splits preferred — use Split Screen, Left-Aligned, or Asymmetric Whitespace over centered layouts
+- All multi-column layouts collapse to single column below `md:`
+- All interactive elements: `min-h-11`
 
-**Step 3 — Apply the cubic-bezier value:**
+## 6. Motion
+
+CSS-first. Use Motion library only for: spring physics, staggered orchestration, perpetual loops.
+
+**Easing selection (3 steps):**
+
+1. **Pick a family** — `SINE` (softest) → `QUAD`/`CUBIC` (everyday UI) → `QUART`/`QUINT` (emphatic) → `EXPO` (dramatic) → `BACK`/`ANTICIPATE` (springy). See `references/EASING.md` for full table.
+2. **Pick direction** — `Out` (entering, most common) · `InOut` (cross-screen) · `In` (exiting, rarely)
+3. **Apply value:**
 
 ```
-sineOut:        cubic-bezier(0.61, 1, 0.87, 1)
-sineInOut:      cubic-bezier(0.36, 0, 0.64, 1)
-quadOut:        cubic-bezier(0.5, 1, 0.89, 1)
-quadInOut:      cubic-bezier(0.44, 0, 0.56, 1)
-cubicOut:       cubic-bezier(0.33, 1, 0.68, 1)
-cubicInOut:     cubic-bezier(0.66, 0, 0.34, 1)
-quartOut:       cubic-bezier(0.25, 1, 0.5, 1)
-quartInOut:     cubic-bezier(0.78, 0, 0.22, 1)
-quintOut:       cubic-bezier(0.22, 1, 0.36, 1)
-quintInOut:     cubic-bezier(0.86, 0, 0.14, 1)
-expoOut:        cubic-bezier(0.16, 1, 0.3, 1)
-expoInOut:      cubic-bezier(0.9, 0, 0.1, 1)
-circOut:        cubic-bezier(0, 0.55, 0.45, 1)
-circInOut:      cubic-bezier(0.85, 0.09, 0.15, 0.91)
-jumpInOut:      cubic-bezier(1, 0, 0, 1)
-backOut:        cubic-bezier(0.34, 1.56, 0.64, 1)
-backInOut:      cubic-bezier(0.68, -0.6, 0.32, 1.6)
-anticipateInOut:cubic-bezier(0.8, -0.4, 0.5, 1)
+cubicOut:    cubic-bezier(0.33, 1, 0.68, 1)     ← default for hover & enter
+cubicInOut:  cubic-bezier(0.66, 0, 0.34, 1)     ← cross-screen moves
+quartOut:    cubic-bezier(0.25, 1, 0.5, 1)      ← emphatic entrances
+backOut:     cubic-bezier(0.34, 1.56, 0.64, 1)  ← springy popovers / toasts
 ```
 
-**CSS-first usage patterns:**
+**Common patterns:**
 
-- **Hover:** `transition-[property] duration-200 ease-[cubicOut]` — snappy, responsive
-- **Enter & Leave:** `ease-[cubicOut]` or `ease-[quartOut]` — elements decelerate into place
-- **Element moving across screen:** `ease-[cubicInOut]` — smooth acceleration and deceleration
+- Hover: `transition-[property] duration-200 ease-[cubicOut]`
+- Enter / leave: `transition-[property] duration-300 ease-[cubicOut]`
+- Cross-screen: `transition-[property] duration-500 ease-[cubicInOut]`
+- Spring (Motion): `transition={{ type: "spring", stiffness: 100, damping: 20, mass: 1 }}`
+- Snappy spring: `transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}`
 
-**When Motion is required, provide copy-paste spring parameters:**
+Animate only `transform` and `opacity`. Never animate layout properties (`top`, `left`, `width`, `height`).
 
-- **Spring default:** `transition={{ type: "spring", stiffness: 100, damping: 20, mass: 1 }}` — premium, weighty feel
-- **Snappy spring (hover/micro):** `transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}`
-- **Perpetual Micro-Interactions:** `animate` with `repeat: Infinity` — Pulse, Typewriter, Float, Shimmer
-- **Staggered Orchestration:** `staggerChildren` with `delayChildren` for waterfall list reveals
+## 7. Anti-Patterns
 
-**Performance rules (always):** Animate exclusively via `transform` and `opacity`. Never animate `top`, `left`, `width`, `height`.
-
-### 7. List Anti-Patterns (AI Tells)
-
-Encode these as explicit "NEVER DO" rules in the DESIGN.md:
-
-- No emojis anywhere
-- No `Inter` font
-- No generic serif fonts (`Times New Roman`, `Georgia`, `Garamond`) — distinctive modern serifs only if needed
+- No emojis
+- No `Inter`, no generic serifs (`Times New Roman`, `Georgia`, `Garamond`)
 - No pure black (`#000000`)
-- No neon/outer glow shadows
+- No neon / outer glow shadows
 - No oversaturated accents
 - No excessive gradient text on large headers
 - No custom mouse cursors
-- No overlapping elements — clean spatial separation always
-- No 3-column equal card layouts
-- No generic names ("John Doe", "Acme", "Nexus")
-- No fake round numbers (`99.99%`, `50%`)
-- No fabricated data or statistics — never generate metrics, performance numbers, uptime percentages, response times, or any data that the user did not explicitly provide. Use clear placeholder labels like `[metric]` instead
-- No fake system/metric sections — "SYSTEM PERFORMANCE METRICS", "KEY STATISTICS" dashboard cards filled with invented data are BANNED
-- No `LABEL // YEAR` formatting — lazy AI convention, not real design typography
+- No 3-column equal card layouts — use 2-column Zig-Zag, asymmetric grid, or horizontal scroll
+- No overlapping elements
+- No generic placeholder names ("John Doe", "Acme", "Nexus")
+- No fabricated data — use `[metric]` labels, not invented numbers
+- No `LABEL // YEAR` formatting
 - No AI copywriting clichés ("Elevate", "Seamless", "Unleash", "Next-Gen")
-- No filler UI text: "Scroll to explore", "Swipe down", scroll arrows, bouncing chevrons
+- No filler UI: "Scroll to explore", scroll arrows, bouncing chevrons
 - No broken Unsplash links — use `picsum.photos` or SVG avatars
 
-## Output Format (DESIGN.md Structure)
+## Output Format
 
-Read `references/DESIGN.md` and fill in each section. Do not add, remove, or reorder any sections.
-
-## Best Practices
-
-- **Use Tailwind classes:** Write `rounded-2xl` and `text-5xl tracking-tight`, not vague descriptions like "generously rounded" or "track-tight scale"
-- **Be Functional:** Explain what each element is used for
-- **Be Consistent:** Same Tailwind class terminology throughout the document
-- **Be Precise:** Include exact Tailwind tokens, hex codes, and rem values
-- **Be Opinionated:** This is not a neutral template — it enforces a specific, premium aesthetic
-- **Derive from brand:** Color and layout direction should reflect the `BRAND.md` context
-
-## Common Pitfalls to Avoid
-
-- Using vague descriptions instead of Tailwind classes ("generously rounded" → use `rounded-2xl`)
-- Omitting Tailwind tokens or using only descriptive color names
-- Forgetting functional roles of design elements
-- Defaulting to generic "safe" designs instead of enforcing the curated aesthetic
-- Ignoring the anti-pattern list — these are what make the output premium
-- Fabricating brand colors without reading `BRAND.md` first
+Read `references/DESIGN.md` and fill each section with project-specific values. Do not add, remove, or reorder sections.

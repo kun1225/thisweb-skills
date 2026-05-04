@@ -17,20 +17,26 @@
 
 ## 3. 字型規則
 
-- **Hero：** `font-display` → [字體名稱] — `text-6xl font-bold tracking-tight` — 頁面主標語、Banner 大字，每頁最多出現一次
-- **Title：** `font-display` → [字體名稱] — `text-4xl font-semibold tracking-tight` — Section 標題、頁面 H1
-- **Subtitle：** `font-sans` → [字體名稱] — `text-2xl font-medium tracking-tight` — 卡片標題、H2/H3、模組小標
-- **Body-lg：** `font-sans` → [字體名稱] — `text-lg leading-relaxed max-w-[65ch]` — 文章長文、Landing page 引言段落
-- **Body-sm：** `font-sans` → [字體名稱] — `text-base leading-relaxed max-w-[65ch]` — 一般正文、側欄說明、表單 helper text
-- **Caption：** `font-sans` → [字體名稱] — `text-sm leading-normal text-muted` — 圖片說明、日期、metadata
-- **Label：** `font-sans` → [字體名稱] — `text-sm font-medium tracking-wide` — 按鈕文字、tag、badge、表單 label
+- 字體 token 名稱必須直接對應語義層級，禁止把多個層級共用成 `font-sans` 或 `font-display`
+- **Hero：** `font-hero` → [字體名稱] — `text-6xl font-bold tracking-tight` — 頁面主標語、Banner 大字，每頁最多出現一次
+- **Title：** `font-title` → [字體名稱] — `text-4xl font-semibold tracking-tight` — Section 標題、頁面 H1
+- **Subtitle：** `font-subtitle` → [字體名稱] — `text-2xl font-medium tracking-tight` — 卡片標題、H2/H3、模組小標
+- **Body-lg：** `font-body-lg` → [字體名稱] — `text-lg leading-relaxed max-w-[65ch]` — 文章長文、Landing page 引言段落
+- **Body-sm：** `font-body-sm` → [字體名稱] — `text-base leading-relaxed max-w-[65ch]` — 一般正文、側欄說明、表單 helper text
+- **Caption：** `font-caption` → [字體名稱] — `text-sm leading-normal text-muted` — 圖片說明、日期、metadata
+- **Label：** `font-label` → [字體名稱] — `text-sm font-medium tracking-wide` — 按鈕文字、tag、badge、表單 label
 - **Mono：** `font-mono` → [字體名稱] — `text-sm` — 程式碼、SKU、時間戳記、高密度數字
-- **禁用：** Inter、通用系統字體。Dashboard 禁用 `font-display`（serif）。
+- **禁用：** Inter、通用系統字體。Dashboard 禁用 serif-backed title tokens。
 
 ## 4. 元件樣式
 
-- **按鈕：** `bg-zinc-900 text-white px-6 py-2.5 rounded-xl font-medium transition-transform active:-translate-y-px` — 無外發光，按壓觸覺回饋
-- **卡片：** `rounded-2xl border border-zinc-100 bg-white p-6 shadow-sm shadow-zinc-200/50` — 僅在層級需要陰影時使用
+所有帶顏色語意的 class（`text-*`、`bg-*`、`border-*`、`ring-*`、`shadow-*`、`hover:*`、`focus:*`、`active:*`、`from-*`/`to-*` 等）一律只能使用第 2 節定義的語義 token。
+
+禁止範例：`text-zinc-900`、`bg-white`、`border-zinc-200`、`hover:bg-zinc-100`、`text-[#ddd]`、`ring-zinc-400`
+
+- **主要按鈕：** `bg-foreground text-background px-6 py-2.5 rounded-xl font-medium transition-all duration-200 hover:bg-foreground/90 active:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` — 無外發光，按壓觸覺回饋
+- **次要按鈕：** `bg-transparent text-foreground border border-border px-6 py-2.5 rounded-xl font-medium transition-all duration-200 hover:bg-surface active:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`
+- **卡片：** `rounded-2xl border border-border bg-surface p-6 shadow-sm shadow-border/50 hover:shadow-md hover:shadow-border/30 transition-shadow duration-200` — 僅在層級需要陰影時使用；高密度版面改用 `border-t border-border` 分隔線取代
 
 ## 5. 版面原則
 
@@ -42,9 +48,17 @@
 
 CSS 優先 — 僅在需要彈簧物理、交錯編排或無限循環時使用 Motion library。
 
-- **Hover：** `transition-[property] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]`
-- **進場 & 離場：** `transition-[property] duration-300 ease-out`
-- **跨畫面移動：** `transition-[property] duration-500 ease-in-out`
+**Easing 選法（三步驟）：**
+
+1. **選 easing family** — 依品牌個性挑選（SINE 最柔、QUAD/CUBIC 日常 UI、QUART/QUINT 強調感、EXPO 戲劇性、BACK/ANTICIPATE 有彈性）
+2. **選方向變體** — `Out`（元素進場、減速到位，最常用）、`InOut`（畫面間移動）、`In`（元素離場，少用）
+3. **套用對應 cubic-bezier**
+
+**常用模式：**
+
+- **Hover：** `transition-[property] duration-200 ease-[cubicOut]`
+- **進場 & 離場：** `transition-[property] duration-300 ease-[cubicOut]` 或 `ease-[quartOut]`
+- **跨畫面移動：** `transition-[property] duration-500 ease-[cubicInOut]`
 - **Spring 預設（Motion）：** `transition={{ type: "spring", stiffness: 100, damping: 20, mass: 1 }}`
 - **快速 Spring（Motion）：** `transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}`
 
