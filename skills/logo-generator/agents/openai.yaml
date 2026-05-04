@@ -1,0 +1,4 @@
+interface:
+  display_name: "Logo Generator"
+  short_description: "Create SVG logos and imagegen showcases"
+  default_prompt: "Use $logo-generator to create logo concepts and a polished brand showcase."
