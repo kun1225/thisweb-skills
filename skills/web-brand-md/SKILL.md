@@ -1,17 +1,11 @@
 ---
 name: web-brand-md
-description: Clarify a user's brand direction before website structure, copywriting, or visual design begins, then produce a concise `BRAND.md` that downstream AI can use for homepage decisions. Use this skill when the user is still unclear about their brand direction, audience, value proposition, differentiation, core message, or tone for a personal brand site, landing page, portfolio, product page, course page, event page, or small SaaS homepage. Also use it when the user says they do not know how to describe their brand, offer, target audience, or core message yet, even if they do not explicitly ask for a "brand guideline." Do not use this skill when the brand foundations are already clear and the user is explicitly asking you to write final copy, build page sections, design the interface, or implement the website.
+description: description: Clarify brand direction before website planning and produce a concise BRAND.md for downstream homepage work. Use this skill when the user is unsure about their brand, offer, audience, value proposition, differentiation, core message, desired visitor action, or tone for a personal brand site, landing page, portfolio, product page, course page, event page, or small SaaS homepage. Do not use it when the brand direction is already clear and the user wants final copy, page sections, interface design, or website implementation.
 allowed-tools:
   - "Read"
   - "Write"
   - "web_fetch"
 ---
-
-# Website brand guideline
-
-This skill is for the stage before website structure and copy polish. Its job is to turn fuzzy business context into a compact brand brief that another AI step can reliably use.
-
-The output is intentionally minimal. Do not expand it into a full brand strategy deck. Do not add homepage sections, full copywriting, wireframes, or design systems unless the user explicitly asks for them.
 
 ## Language rules
 
@@ -36,8 +30,6 @@ Help the user answer four questions well enough for website work to move forward
 2. Who is the site for and what problem are they solving?
 3. What is the clearest core message?
 4. How should the website sound?
-
-Then convert the answers into a `BRAND.md` file using the template in `references/BRAND.md`.
 
 ## Interaction style
 
@@ -140,9 +132,20 @@ Good follow-up questions usually narrow one of these:
 
 ### 3. Keep the interview short
 
-Do not keep digging once the material is strong enough to drive a homepage. If the user is busy, uncertain, or in workshop mode, make a reasonable synthesis instead of demanding exhaustive detail.
+Do not run a long brand discovery session. Ask only the few questions needed to create a useful homepage brief.
 
-If a key area remains missing, state the assumption briefly before the final output.
+Before writing the final `BRAND.md`, make sure you have enough information to answer these essentials:
+
+- what the brand offers
+- who the primary audience is
+- what situation, problem, or desire brings that audience here
+- why this brand is a credible or better choice
+- what action the visitor should take
+- what tone the website should have
+
+If one or two essentials remain unclear, ask a targeted follow-up question.
+
+If a key area is still missing, state the assumption briefly in the final output.
 
 ### 4. Synthesize and deliver
 
@@ -152,18 +155,15 @@ Once the answers are good enough to drive a homepage, stop asking and write the 
 
 When writing the final file:
 
-- Use Traditional Chinese for all output.
-- Prefer concrete wording over abstract branding language.
-- Keep each field short enough to be scannable.
-- Write for downstream AI and website planning, not for executives.
-- Preserve the user's language when it is strong and specific; rewrite vague wording into clearer positioning when it is not.
-- Do not add sections outside the required template.
-- Do not use empty buzzwords such as "innovative," "empowering," "passionate," or "cutting-edge" unless the user's context truly requires them.
-- Do not mix Chinese and English unless a product name, proper noun, or original user wording is genuinely clearer in English.
-- If the user provides source material in another language, still deliver the final result in Traditional Chinese unless the user explicitly asks for a different output language.
+- Use Traditional Chinese for all output unless the user explicitly requests another language. Keep English only for product names, proper nouns, or original wording that is genuinely clearer in English.
+- Prefer concrete, specific wording over abstract branding language. Preserve strong user wording; rewrite vague wording into clearer positioning.
+- Keep each field short, scannable, and useful for downstream website planning.
+- Follow the required template exactly. Do not add, remove, or reorder sections.
+- Avoid empty buzzwords such as "innovative," "empowering," "passionate," or "cutting-edge" unless the user's context truly supports them.
 - If the user's answers are incomplete, make the lightest reasonable assumption and keep the wording modest.
-- If the user serves too many audiences, pick the primary one for the website and reflect that clearly.
-- Do not add a preamble or closing remarks. If you made a significant assumption, append one short line after the file noting it.
+- If the user serves too many audiences, choose the primary website audience and make that choice clear.
+- Do not add a preamble or closing remarks. If you made a significant assumption, append one short note after the file.
+- Only write or update `BRAND.md`. Do not create, modify, refactor, or suggest changes to any other project files or code.
 
 ## Output template
 
@@ -173,7 +173,19 @@ Read `references/BRAND.md` and fill in each field. Do not add, remove, or reorde
 
 Deliver the completed `BRAND.md` content as soon as the interview yields enough material — do not wait for the user to ask.
 
-If the environment supports file creation and the user is working in a project, save the result as `BRAND.md`.
+If the environment supports file creation and the user is working in a project:
+
+1. Inspect the repository structure first. Detect the most appropriate existing documentation or knowledge directory.
+2. Prefer directories commonly used for documentation or references, including:
+   - `references/`
+   - `docs/`
+   - `refers/`
+   - `documentation/`
+   - `knowledge/`
+   - `wiki/`
+3. Save the file as `<detected_directory>/BRAND.md`.
+4. Avoid placing the file inside source-code directories unless clearly intended.
+5. If no suitable directory exists, create and use: `references/BRAND.md`
 
 ## Quality bar
 
