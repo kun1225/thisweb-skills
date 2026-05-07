@@ -2,6 +2,10 @@
 
 Polished UI should stay smooth under real load, not just in an empty local demo.
 
+## UX law for responsiveness
+
+**Doherty Threshold**: productivity improves when users and the system interact without either side waiting on the other. Treat 400ms as the upper bound for visible feedback, then tune frequent interactions to feel closer to instant.
+
 ## Transition only what changes
 
 Never use `transition: all` and avoid Tailwind's generic `transition` utility when you know the exact animated properties.

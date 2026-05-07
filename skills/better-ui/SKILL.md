@@ -14,6 +14,7 @@ Use this skill to move an interface from merely functional to polished, intentio
 - Beauty is leverage. Good defaults, good timing, and good interaction design matter.
 - Do not add motion or decoration by reflex. Every change should improve clarity, responsiveness, or perceived quality.
 - Do not default to cards for every chunk of content. Start with spacing, typography, alignment, and dividers before introducing boxed surfaces.
+- Layout comes before surface treatment. Fix grouping, rhythm, density, and scanability before adding borders, shadows, or containers.
 
 ## When to use this skill
 
@@ -72,6 +73,7 @@ Read [references/animations.md](references/animations.md) for the full framework
 Read only the relevant reference files for the task:
 
 - [references/typography.md](references/typography.md) for text wrapping, font smoothing, and tabular numbers.
+- [references/layout.md](references/layout.md) for spacing rhythm, hierarchy, density, responsive structure, and Flexbox vs Grid choices.
 - [references/surfaces.md](references/surfaces.md) for radius, optical alignment, shadows, image outlines, hit areas, and when cards should or should not be used.
 - [references/animations.md](references/animations.md) for animation decisions, easing, timing, springs, enter/exit motion, gestures, and accessibility.
 - [references/performance.md](references/performance.md) for transition specificity, `will-change`, CSS vs JS motion, and performance caveats.
@@ -95,6 +97,8 @@ Rules:
 
 - Is the UI solving the problem with fewer but better details?
 - Is the content grouped with spacing, typography, sections, or dividers before reaching for cards?
+- Are related elements grouped tightly and unrelated groups separated clearly?
+- Does the layout preserve scanability before adding surface treatment?
 - Are cards only used where an item truly needs to behave as an independent interactive object?
 - Are nested surfaces using correct radii and depth treatment?
 - Are icons and mixed-content controls optically aligned, not just mathematically centered?

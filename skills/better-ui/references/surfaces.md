@@ -27,6 +27,8 @@ If the spacing between layers is large, treat them as separate surfaces instead 
 
 Geometric centering is not always visual centering. Adjust until it looks balanced.
 
+Text can look visually indented even at `margin-left: 0` because glyphs contain built-in side bearing. Use tiny negative offsets such as `-0.05em` only when the edge visibly looks wrong.
+
 ### Buttons with text and icon
 
 The icon side often needs slightly less padding than the text side.
@@ -41,6 +43,8 @@ The icon side often needs slightly less padding than the text side.
 ### Play triangles and asymmetric icons
 
 Play icons, arrows, stars, and carets often look off when mathematically centered. Prefer fixing the SVG itself. If needed, make a tiny manual offset in layout.
+
+Play icons usually need to move slightly right. Arrows often need a small nudge toward the direction they point.
 
 ## Shadows over borders
 
@@ -98,6 +102,15 @@ Avoid cards when:
 
 If none of those checks rule it out, a card is acceptable.
 
+## UX laws for surfaces
+
+Use these laws to decide whether a surface improves usability or only adds decoration.
+
+- **Fitts's Law**: important targets should be large enough, close enough, and stable enough to acquire quickly. Pair visual affordance with real hit area, especially on mobile and dense toolbars.
+- **Law of Common Region**: boundaries create perceived groups. Use cards, panels, and outlines when the grouping needs to be stronger than proximity alone.
+- **Aesthetic-Usability Effect**: polished surfaces can make an interface feel easier to use. Do not let attractive shadows, borders, or radius hide unclear hierarchy or weak affordance.
+- **Von Restorff Effect**: the distinct item in a set gets attention. Use visual distinction for primary actions, selected states, and critical alerts, but do not make many items compete at once.
+
 ## Image outlines
 
 Images often need a subtle outline so they sit cleanly against different surfaces.
@@ -146,23 +159,19 @@ Tailwind:
 
 Interactive controls should have at least a 40x40px hit area, and ideally 44x44px when practical.
 
-If the visible control is smaller, extend the target with a pseudo-element.
+If the visible control is smaller, prefer extending the hit area with a pseudo-element. Use padding only when the visual size should also grow.
 
 ```css
-.checkbox {
+.icon-button {
   position: relative;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
-.checkbox::after {
+.icon-button::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  transform: translate(-50%, -50%);
+  inset: -10px;
 }
 ```
 

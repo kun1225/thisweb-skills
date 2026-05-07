@@ -2,6 +2,20 @@
 
 Typography polish is mostly about removing tiny sources of friction: awkward line breaks, heavy rendering, and shifting numerals.
 
+## UX laws for readable UI
+
+- **Cognitive Load**: every extra label, line break, and visual treatment costs attention. Remove text that repeats structure the UI already communicates.
+- **Chunking**: group text into meaningful units before adjusting font size or color. Short headings, compact labels, and grouped fields reduce parsing effort.
+- **Serial Position Effect**: users remember the first and last items in a sequence more easily. Put the most important list items, tabs, or steps where attention naturally lands.
+
+## Responsive type
+
+Prefer `clamp()` for headings that need fluid size changes across available space. Use viewport or breakpoint changes more cautiously for body and description text so reading rhythm stays stable.
+
+## Leading
+
+Chinese text usually reads best with `line-height` around `1.2em` to `1.5em`. Use the tighter end for compact UI labels and the looser end for longer reading blocks.
+
 ## Text wrapping
 
 ### Use `text-wrap: balance` on centered headings

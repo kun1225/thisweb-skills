@@ -7,8 +7,6 @@ allowed-tools:
   - "web_fetch"
 ---
 
-Generate a `DESIGN.md` for a Tailwind project. The file is consumed by AI Agents to produce new screens — write rules that are precise, scannable, and immediately actionable. Read `references/DESIGN.md` for the output template; fill every section with project-specific values.
-
 ## The Goal
 
 Generate a `DESIGN.md` file that encodes:
@@ -32,6 +30,8 @@ Generate a `DESIGN.md` file that encodes:
 - **DESIGN.md content**: Traditional Chinese for all descriptive text, section titles, and body copy
 - **Stay English**: Tailwind classes, hex codes, font names, CSS values, Motion parameters
 - **User communication**: Traditional Chinese
+
+Before generating `DESIGN.md`, confirm the project's primary content language. Infer it from the repo when possible. If it is not clear from the existing context, ask the user first. Do not assign typography tokens until the language is confirmed.
 
 ## 1. Atmosphere
 
@@ -87,16 +87,16 @@ If the project language is ambiguous, ask before assigning fonts.
 
 **Type scale:**
 
-| Level        | Font Token      | Tailwind Classes                         | Usage                                                |
-| ------------ | --------------- | ---------------------------------------- | ---------------------------------------------------- |
-| **Hero**     | `font-hero`     | `text-6xl font-bold tracking-tight`      | Page hero statement, banner. Max once per page.      |
-| **Title**    | `font-title`    | `text-4xl font-semibold tracking-tight`  | Section headings, H1                                 |
-| **Subtitle** | `font-subtitle` | `text-2xl font-medium tracking-tight`    | Card headings, H2/H3, module labels                  |
-| **Body-lg**  | `font-body-lg`  | `text-lg leading-relaxed max-w-[65ch]`   | Long-form articles, landing page lead paragraphs     |
-| **Body-sm**  | `font-body-sm`  | `text-base leading-relaxed max-w-[65ch]` | General body, sidebar descriptions, form helper text |
-| **Caption**  | `font-caption`  | `text-sm leading-normal text-muted`      | Image captions, dates, metadata                      |
-| **Label**    | `font-label`    | `text-sm font-medium tracking-wide`      | Button text, tags, badges, form labels               |
-| **Mono**     | `font-mono`     | `text-sm`                                | Code, SKUs, timestamps, high-density numbers         |
+| Level        | Font Token      | Tailwind Classes                               | Usage                                                |
+| ------------ | --------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| **Hero**     | `font-hero`     | `text-[clamp(2.75rem,6vw,5rem)] font-bold`     | Page hero statement, banner. Max once per page.      |
+| **Title**    | `font-title`    | `text-[clamp(2rem,4vw,3.5rem)] font-semibold`  | Section headings, H1                                 |
+| **Subtitle** | `font-subtitle` | `text-[clamp(1.25rem,2.4vw,2rem)] font-medium` | Card headings, H2/H3, module labels                  |
+| **Body-lg**  | `font-body-lg`  | `text-lg leading-relaxed max-w-[65ch]`         | Long-form articles, landing page lead paragraphs     |
+| **Body-sm**  | `font-body-sm`  | `text-base leading-relaxed max-w-[65ch]`       | General body, sidebar descriptions, form helper text |
+| **Caption**  | `font-caption`  | `text-sm leading-normal text-muted`            | Image captions, dates, metadata                      |
+| **Label**    | `font-label`    | `text-sm font-medium`                          | Button text, tags, badges, form labels               |
+| **Mono**     | `font-mono`     | `text-sm`                                      | Code, SKUs, timestamps, high-density numbers         |
 
 **Policy:**
 
@@ -106,6 +106,8 @@ If the project language is ambiguous, ask before assigning fonts.
 - Generic serifs (`Times New Roman`, `Georgia`, `Garamond`) are BANNED — if serif is needed, use `Fraunces`, `Editorial New`, or `Instrument Serif`
 - Dashboard / software UI: serif-backed title tokens are BANNED
 - When density > 7, all numbers use `font-mono`
+- CJK body copy should keep `line-height` in the `1.2em` to `1.5em` range depending on density and text size; do not compress it below that range for a tighter look
+- Heading sizes should prefer `clamp(...)` for responsive scaling; Tailwind text-size utilities in the table are semantic starting points, not fixed final sizes
 
 ## 4. Component Stylings
 
@@ -134,10 +136,24 @@ If the project language is ambiguous, ask before assigning fonts.
 
 ## 5. Layout Principles
 
-- Grid-first responsive architecture. Contain with `max-w-8xl mx-auto`
-- Asymmetric splits preferred — use Split Screen, Left-Aligned, or Asymmetric Whitespace over centered layouts
+- Decide layout per section based on content type, density, hierarchy, and interaction needs; do not prescribe a single page-wide layout upfront
+- Use layout descriptions that explain why a section needs a given structure (for example: comparison grid, editorial stack, tool workspace, data-dense panel), not a universal template for the entire product
+- Grid-first responsive architecture. Do not rely on `max-width` wrappers like `max-w-8xl mx-auto` as the default page containment strategy. Define a dynamic page-edge token and contain sections with `padding-inline` instead:
+
+```css
+:root {
+  --spacing-contain-max: 1600px;
+  --spacing-edge: max(
+    max(min(3.5vw, 96px), 8px),
+    calc((100vw - var(--spacing-contain-max)) / 2)
+  );
+}
+```
+
+Use `px-edge` consistently for page edges. This keeps edge spacing fluid, limits effective content width on oversized screens, and avoids the scrollbar-width differences that can make `mx-edge` and `max-width` wrappers behave inconsistently.
+
+- Prefer asymmetry when it helps hierarchy or scanning, but let each section choose between stacked, split, grid, rail, or freeform compositions based on its content
 - All multi-column layouts collapse to single column below `md:`
-- All interactive elements: `min-h-11`
 
 ## 6. Motion
 

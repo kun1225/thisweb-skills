@@ -17,16 +17,21 @@
 
 ## 3. 字型規則
 
+- **專案語言：** [說明主要內容語言：Latin only / CJK primary / Mixed。若為 Mixed，說明哪些 token 使用 Latin 字體、哪些 token 使用 CJK 字體。]
 - 字體 token 名稱必須直接對應語義層級，禁止把多個層級共用成 `font-sans` 或 `font-display`
-- **Hero：** `font-hero` → [字體名稱] — `text-6xl font-bold tracking-tight` — 頁面主標語、Banner 大字，每頁最多出現一次
-- **Title：** `font-title` → [字體名稱] — `text-4xl font-semibold tracking-tight` — Section 標題、頁面 H1
-- **Subtitle：** `font-subtitle` → [字體名稱] — `text-2xl font-medium tracking-tight` — 卡片標題、H2/H3、模組小標
+- **Hero：** `font-hero` → [字體名稱] — `text-[clamp(2.75rem,6vw,5rem)] font-bold` — 頁面主標語、Banner 大字，每頁最多出現一次
+- **Title：** `font-title` → [字體名稱] — `text-[clamp(2rem,4vw,3.5rem)] font-semibold` — Section 標題、頁面 H1
+- **Subtitle：** `font-subtitle` → [字體名稱] — `text-[clamp(1.25rem,2.4vw,2rem)] font-medium` — 卡片標題、H2/H3、模組小標
 - **Body-lg：** `font-body-lg` → [字體名稱] — `text-lg leading-relaxed max-w-[65ch]` — 文章長文、Landing page 引言段落
 - **Body-sm：** `font-body-sm` → [字體名稱] — `text-base leading-relaxed max-w-[65ch]` — 一般正文、側欄說明、表單 helper text
 - **Caption：** `font-caption` → [字體名稱] — `text-sm leading-normal text-muted` — 圖片說明、日期、metadata
-- **Label：** `font-label` → [字體名稱] — `text-sm font-medium tracking-wide` — 按鈕文字、tag、badge、表單 label
+- **Label：** `font-label` → [字體名稱] — `text-sm font-medium` — 按鈕文字、tag、badge、表單 label
 - **Mono：** `font-mono` → [字體名稱] — `text-sm` — 程式碼、SKU、時間戳記、高密度數字
-- **禁用：** Inter、通用系統字體。Dashboard 禁用 serif-backed title tokens。
+- **規則：**
+  - CJK 正文的 `line-height` 維持在 `1.2em` 到 `1.5em` 之間，依密度與字級調整，不要為了緊湊而再壓低
+  - 標題優先使用 `clamp(...)` 做 responsive scaling，正文維持穩定
+  - Dashboard / software UI 禁用 serif-backed title tokens
+  - 禁用 Inter。若使用 serif，避免 generic serifs（如 `Times New Roman`、`Georgia`、`Garamond`）
 
 ## 4. 元件樣式
 
@@ -40,9 +45,24 @@
 
 ## 5. 版面原則
 
-（Grid 優先的響應式架構。優先使用非對稱分割版面。
-`md:` 以下收合為單欄。使用 `max-w-7xl mx-auto` 約束最大寬度。
-所有互動元素最小 `min-h-[44px]`。）
+- 每個 section 依內容型態、資訊密度、層級與互動需求決定版面，不預設整頁只能有單一 layout
+- 描述每個 section 為什麼需要某種結構，例如比較型 grid、editorial stack、tool workspace、data-dense panel，而不是套用通用模板
+- Grid-first responsive architecture，但不要把 `max-w-* mx-auto` 當成預設頁面 containment
+- 定義動態 page-edge token，並以 `padding-inline` 做頁面邊緣約束：
+
+```css
+:root {
+  --spacing-contain-max: 1600px;
+  --spacing-edge: max(
+    max(min(3.5vw, 96px), 8px),
+    calc((100vw - var(--spacing-contain-max)) / 2)
+  );
+}
+```
+
+- 頁面邊緣統一使用 `px-edge`，不要用 `mx-edge`；這樣在有 scrollbar 時寬度計算較一致
+- 非對稱在有助於層級或掃視時優先，但每個 section 可依內容選擇 stacked、split、grid、rail 或 freeform composition
+- 多欄版面在 `md:` 以下收合為單欄
 
 ## 6. 動態與互動
 

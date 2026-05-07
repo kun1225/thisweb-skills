@@ -110,6 +110,12 @@ The perception of speed matters as much as actual speed.
 - Once one tooltip is open, nearby tooltips should appear instantly with no delay or animation.
 - Faster open/close timings often make the whole app feel more capable.
 
+### UX laws for motion
+
+- **Doherty Threshold**: interaction should keep users and system in rhythm. Provide visible feedback within 400ms, and make repeated controls feel faster than occasional transitions.
+- **Goal-Gradient Effect**: users become more motivated as they get closer to a goal. Progress motion should clarify advancement without slowing the task.
+- **Peak-End Rule**: users remember the most intense moment and the end of an experience. Reserve expressive motion for meaningful peaks and clean completion states.
+
 ## Tooltips
 
 Use an initial delay to avoid accidental activation, but once a tooltip is already open, adjacent tooltips should appear instantly.
