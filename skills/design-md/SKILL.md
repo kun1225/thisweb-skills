@@ -31,8 +31,6 @@ Generate a `DESIGN.md` file that encodes:
 - **Stay English**: Tailwind classes, hex codes, font names, CSS values, Motion parameters
 - **User communication**: Traditional Chinese
 
-Before generating `DESIGN.md`, confirm the project's primary content language. Infer it from the repo when possible. If it is not clear from the existing context, ask the user first. Do not assign typography tokens until the language is confirmed.
-
 ## 1. Atmosphere
 
 Three short descriptors:
@@ -62,15 +60,17 @@ Three short descriptors:
 **Decision workflow:**
 
 1. Read `BRAND.md` for tone and color direction
-2. Honor explicit user preferences (preferred colors, banned colors, existing brand)
-3. If no preferences, derive from brand context
-4. If an existing token schema exists (e.g. shadcn/ui CSS variables), keep the structure but recalibrate values — never carry over defaults just because tokens exist
+2. Confirm the project's primary content language before locking visual direction. Infer it from the repo when possible; if it is unclear from the existing context, ask the user first. Do not assign typography tokens until the language is confirmed.
+3. Check whether the user already gave explicit color preferences or banned colors
+4. If not, ask the user first in Traditional Chinese and provide 3 short, brand-appropriate palette directions they can pick from or revise, such as: 穩重專業（深森林綠 / 石板灰 / 暖白）, 現代科技（深海軍藍 / 冷灰 / 霧白）, 編輯質感（酒紅 / 墨黑 / 米白）. Honor explicit user preferences (preferred colors, banned colors, existing brand)
+5. If the user does not care, derive from brand context
+6. Do not finalize Section 2 color tokens until the user has confirmed a preference, rejected the options, or clearly asked you to decide
+7. If an existing token schema exists (e.g. shadcn/ui CSS variables), keep the structure but recalibrate values — never carry over defaults just because tokens exist
 
 **Constraints:**
 
 - Max 1 accent. Saturation below 80%
 - No "AI Purple/Blue Neon" — no purple glows, no neon gradients
-- Neutral base: Zinc or Slate only — no warm/cool gray mixing
 - No pure black (`#000000`) — use Off-Black or `zinc-950`
 
 ## 3. Typography
@@ -191,7 +191,6 @@ Animate only `transform` and `opacity`. Never animate layout properties (`top`, 
 - No oversaturated accents
 - No excessive gradient text on large headers
 - No custom mouse cursors
-- No 3-column equal card layouts — use 2-column Zig-Zag, asymmetric grid, or horizontal scroll
 - No overlapping elements
 - No generic placeholder names ("John Doe", "Acme", "Nexus")
 - No fabricated data — use `[metric]` labels, not invented numbers
