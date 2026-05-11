@@ -21,7 +21,7 @@ Generate a `DESIGN.md` file that encodes:
 
 ## Step 0 — Establish Brand Context
 
-1. **BRAND.md exists** → Read it. Use as source of truth.
+1. **BRAND.md exists** → Run `find . -name BRAND.md -type f`. Read it and use it as the source of truth.
 2. **No BRAND.md, but context exists** → Synthesize a minimal `BRAND.md` from README, components, or user description. Write it to the project root, then continue.
 3. **No BRAND.md, no context** → Fetch `https://raw.githubusercontent.com/kun1225/thisweb-skills/main/skills/web-brand-md/SKILL.md` and run its interview flow to generate `BRAND.md` first.
 
@@ -31,15 +31,42 @@ Generate a `DESIGN.md` file that encodes:
 - **Stay English**: Tailwind classes, hex codes, font names, CSS values, Motion parameters
 - **User communication**: Traditional Chinese
 
-## 1. Atmosphere
+## 1. Workflow
 
-Three short descriptors:
+### 1.1 Confirm language
+
+Confirm the project's primary content language before locking visual direction. Infer it from the repo when possible; if it is unclear from the existing context, ask the user first. Do not assign typography tokens until the language is confirmed.
+
+### 1.2 Clarify or confirm the intended feel
+
+1. Read `BRAND.md` for tone, atmosphere and motion.
+2. Run **Feel Calibration** before any design decisions. Summarize the intended feel in Traditional Chinese with three short axes: mood, density, motion intensity. If the feel is still ambiguous, ask the user first. Do not proceed to color, type, component, or layout decisions until the feel is explicit. If the user gave abstract taste language instead of concrete UI direction, translate it into 2-3 concise feel directions in Traditional Chinese and ask the user to confirm or refine. Example format: `冷靜策展：留白多、節奏慢、重點稀少`, `精密工具：高密度、結構清楚、動態克制`, `溫暖編輯：米色底、文字導向、輕微層次感`.
+
+### 1.3 Clarify or confirm color direction if needed
+
+Check whether the user already gave explicit color preferences or banned colors before finalizing Section 3 color tokens. If not, ask the user first in Traditional Chinese and provide 3 short, brand-appropriate palette directions they can pick from or revise, such as: 穩重專業（背景：石板灰 / 主要顏色：深森林綠 / 次要顏色：淺木頭咖啡）, 現代科技（背景：霧白 / 主要顏色：深海軍藍 / 次要顏色：冷灰）, 編輯質感（背景：米白 / 主要顏色：酒紅 / 次要顏色：墨黑）. If the user does not care, derive from brand context.
+
+### 1.4 Write system-level design rules
+
+After the feel is confirmed, finalize global design decisions at the system level: color tokens, typography tokens, component patterns, layout principles, and motion rules. Keep these decisions general enough that later reference-driven design work can still determine concrete section compositions, then write the final `DESIGN.md`.
+
+### 1.5 Hard Gates
+
+- Do not skip from project context directly to a completed `DESIGN.md`.
+- **No feel, no design system**: if mood, density, or motion intensity are still vague, pause and ask
+- **No final tokens before direction is confirmed**: typography and color tokens must follow the confirmed feel, not precede it
+
+## 2. Atmosphere
+
+Three short descriptors only:
 
 - **Mood** — emotional register (e.g. clinical, warm, editorial)
 - **Density** — information compactness (e.g. airy / balanced / dense)
 - **Motion intensity** — animation presence (e.g. static / fluid / cinematic)
 
-## 2. Color Palette
+Keep each descriptor brief and concrete. Do not turn this section into long-form brand storytelling.
+
+## 3. Color Palette
 
 **Output format per color:**
 
@@ -57,23 +84,13 @@ Three short descriptors:
 
 **Required tokens:** `primary`, `background`, `surface`, `foreground`, `muted`, `border`. Add `secondary` / `tertiary` only when multiple accent levels are genuinely needed — max 3 total.
 
-**Decision workflow:**
-
-1. Read `BRAND.md` for tone and color direction
-2. Confirm the project's primary content language before locking visual direction. Infer it from the repo when possible; if it is unclear from the existing context, ask the user first. Do not assign typography tokens until the language is confirmed.
-3. Check whether the user already gave explicit color preferences or banned colors
-4. If not, ask the user first in Traditional Chinese and provide 3 short, brand-appropriate palette directions they can pick from or revise, such as: 穩重專業（深森林綠 / 石板灰 / 暖白）, 現代科技（深海軍藍 / 冷灰 / 霧白）, 編輯質感（酒紅 / 墨黑 / 米白）. Honor explicit user preferences (preferred colors, banned colors, existing brand)
-5. If the user does not care, derive from brand context
-6. Do not finalize Section 2 color tokens until the user has confirmed a preference, rejected the options, or clearly asked you to decide
-7. If an existing token schema exists (e.g. shadcn/ui CSS variables), keep the structure but recalibrate values — never carry over defaults just because tokens exist
-
 **Constraints:**
 
 - Max 1 accent. Saturation below 80%
 - No "AI Purple/Blue Neon" — no purple glows, no neon gradients
 - No pure black (`#000000`) — use Off-Black or `zinc-950`
 
-## 3. Typography
+## 4. Typography
 
 **Step 0 — Confirm project language:**
 
@@ -109,7 +126,7 @@ If the project language is ambiguous, ask before assigning fonts.
 - CJK body copy should keep `line-height` in the `1.2em` to `1.5em` range depending on density and text size; do not compress it below that range for a tighter look
 - Heading sizes should prefer `clamp(...)` for responsive scaling; Tailwind text-size utilities in the table are semantic starting points, not fixed final sizes
 
-## 4. Component Stylings
+## 5. Component Stylings
 
 **Rule:** Every color-bearing Tailwind class (`text-*`, `bg-*`, `border-*`, `ring-*`, `shadow-*`, `hover:*`, `from-*`/`to-*`, etc.) must use only the semantic tokens defined in Section 2.
 
@@ -134,11 +151,12 @@ If the project language is ambiguous, ask before assigning fonts.
 - **button:** `bg-foreground text-background px-6 py-2.5 rounded-xl font-medium transition-all duration-200 hover:bg-foreground/90 active:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` — no outer glows, tactile push on active
 - **Card:** `rounded-2xl border border-border bg-surface p-6 shadow-sm shadow-border/50 hover:shadow-md hover:shadow-border/30 transition-shadow duration-200` — use shadows only when elevation communicates hierarchy; high-density layouts use `border-t border-border` dividers instead
 
-## 5. Layout Principles
+## 6. Layout Principles
 
 - Decide layout per section based on content type, density, hierarchy, and interaction needs; do not prescribe a single page-wide layout upfront
-- Use layout descriptions that explain why a section needs a given structure (for example: comparison grid, editorial stack, tool workspace, data-dense panel), not a universal template for the entire product
-- Grid-first responsive architecture. Do not rely on `max-width` wrappers like `max-w-8xl mx-auto` as the default page containment strategy. Define a dynamic page-edge token and contain sections with `padding-inline` instead:
+
+- Do not rely on `max-width` wrappers like `max-w-8xl mx-auto` as the default page containment strategy.
+- Define a dynamic page-edge token and contain sections with `padding-inline` instead:
 
 ```css
 :root {
@@ -152,10 +170,9 @@ If the project language is ambiguous, ask before assigning fonts.
 
 Use `px-edge` consistently for page edges. This keeps edge spacing fluid, limits effective content width on oversized screens, and avoids the scrollbar-width differences that can make `mx-edge` and `max-width` wrappers behave inconsistently.
 
-- Prefer asymmetry when it helps hierarchy or scanning, but let each section choose between stacked, split, grid, rail, or freeform compositions based on its content
 - All multi-column layouts collapse to single column below `md:`
 
-## 6. Motion
+## 7. Motion
 
 CSS-first. Use Motion library only for: spring physics, staggered orchestration, perpetual loops.
 
@@ -182,7 +199,7 @@ backOut:     cubic-bezier(0.34, 1.56, 0.64, 1)  ← springy popovers / toasts
 
 Animate only `transform` and `opacity`. Never animate layout properties (`top`, `left`, `width`, `height`).
 
-## 7. Anti-Patterns
+## 8. Anti-Patterns
 
 - No emojis
 - No `Inter`, no generic serifs (`Times New Roman`, `Georgia`, `Garamond`)

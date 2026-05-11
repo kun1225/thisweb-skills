@@ -6,6 +6,12 @@
 範例：「克制的展覽館氛圍，非對稱版面配置，搭配流暢的彈簧物理動態。
 整體感受冷靜但有溫度，像一間採光良好的建築設計工作室。」）
 
+明確寫出：
+
+- **Mood：** [一句具體感受，不要只寫形容詞列表]
+- **Density：** [airy / balanced / dense，並補一句說明資訊編排節奏]
+- **Motion intensity：** [static / fluid / cinematic，並補一句說明互動存在感]
+
 ## 2. 色彩系統
 
 - primary（#XXXXXX）— [描述性色彩名稱]：唯一強調色，用於 CTA、active 狀態、focus ring（飽和度 < 80%。禁用紫色／霓虹色。）
@@ -46,8 +52,8 @@
 ## 5. 版面原則
 
 - 每個 section 依內容型態、資訊密度、層級與互動需求決定版面，不預設整頁只能有單一 layout
-- 描述每個 section 為什麼需要某種結構，例如比較型 grid、editorial stack、tool workspace、data-dense panel，而不是套用通用模板
-- Grid-first responsive architecture，但不要把 `max-w-* mx-auto` 當成預設頁面 containment
+
+- 不要把 `max-w-* mx-auto` 當成預設頁面 containment
 - 定義動態 page-edge token，並以 `padding-inline` 做頁面邊緣約束：
 
 ```css
@@ -61,7 +67,6 @@
 ```
 
 - 頁面邊緣統一使用 `px-edge`，不要用 `mx-edge`；這樣在有 scrollbar 時寬度計算較一致
-- 非對稱在有助於層級或掃視時優先，但每個 section 可依內容選擇 stacked、split、grid、rail 或 freeform composition
 - 多欄版面在 `md:` 以下收合為單欄
 
 ## 6. 動態與互動
